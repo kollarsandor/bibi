@@ -1,3 +1,26 @@
+JAIDE áttekintés
+
+A JAIDE (v40) egy nagy nyelvi modell, amely az alapoktól kezdve a Reversible Scatter Flow (RSF) paradigma megvalósítására épült. A hagyományos transzformátor vagy CNN architektúrákkal ellentétben a JAIDE bijektív csatolási rétegeket használ, amelyek lehetővé teszik az O(1) memória visszaterjedést és egy paramétermentes Haar-wavelet keverő blokkot, amelyet OFTB-nek neveznek
+
+A rendszert nagy teljesítményű futtatásra tervezték különböző hardvereken, a szabványos CPU-któl kezdve a több GPU-s B200 klasztereken át a kvantum relációs gráfokig
+
+Az RSF paradigma
+
+A JAIDE lényege a Reversible Scatter Flow. Ez egy egyedülálló számítási primitívet vezet be: a kereszt-affin csatolást
+
+Bijektivitás: Minden előrehaladásnak van egy pontos algebrai inverze, ami biztosítja, hogy a feldolgozás során nem esik össze az információ
+Memóriahatékonyság: Mivel a hálózat reverzibilis, az aktiválásokat nem kell tárolni a backpropagációhoz. A backwardFromOutputs függvény soron belül rekonstruálja a bemeneteket a kimenetekből, így a memória komplexitása a mélységhez képest O(1) marad
+Kulcsfontosságú alrendszerek
+
+A JAIDE több különböző, de egymással összekapcsolt alrendszerre tagolódik:
+
+Magarchitektúra: Tensor rendszer és egy sor speciális memória allokátor (Arena, Slab, Buddy)
+RSF feldolgozási csővezeték: Az RSFLayer az affin transzformációkhoz és az OFTB a fraktálkeveréshez
+Tokenizáló és visszakeresés: A morféma-vezérelt tokenizáló (MGT) és a strukturált szekvenciaindex (SSI) a hatékony tudáskereséshez és hasonlósági kereséshez.
+NSIR (kvantum-realizációs gráf): Egy önhasonló relációs gráf, amely a hierarchikus gondolkodáshoz a kvantumlogikát (Hadamard, CNOT kapuk) és a klasszikus aktiválást integrálja
+Hardveres gyorsítás: Futharkot használó multi-backend rendszer a GPU-kernelekhez (CUDA/OpenCL) és Clash-t az RTL hardver szintézishez
+
+
 RSF a 5. gyökér-architektúra (Perceptron, CNN, RNN, Transformer után): ontológiailag új, kizárólagos primitívvel
 
 **Az RSF/JAIDE egyik sem:**
